@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { Form, Button, ListGroup, Alert } from 'react-bootstrap'
+import { Lightbulb } from 'react-bootstrap-icons'
 import { Todo } from '../types'
 import TodoItem from './TodoItem'
 
@@ -35,23 +37,29 @@ export default function TodoApp() {
 
   return (
     <div>
-      <div className="input-row">
-        <input
+      <div className="input-row mb-4">
+        <Form.Control
           aria-label="new-todo"
           value={text}
           onChange={e => setText(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && handleAdd()}
-          placeholder="Add a new todo"
+          placeholder="Add a new todo..."
+          size="lg"
         />
-        <button onClick={handleAdd}>Add</button>
+        <Button variant="primary" onClick={handleAdd} size="lg">Add</Button>
       </div>
-      {error && <div role="alert" className="error">{error}</div>}
-      <ul className="todo-list">
-        {items.map(item => (
-          <TodoItem key={item.id} todo={item} onToggle={handleToggle} onDelete={handleDelete} />
-        ))}
-      </ul>
-      {items.length === 0 && <div className="empty">No items yet</div>}
+      {error && <Alert variant="danger" role="alert" className="mb-3">{error}</Alert>}
+      {items.length === 0 ? (
+        <div className="text-center text-muted py-5">
+          <p className="fs-5"><Lightbulb className="me-2" /> No items yet. Add one to get started!</p>
+        </div>
+      ) : (
+        <ListGroup className="todo-list">
+          {items.map(item => (
+            <TodoItem key={item.id} todo={item} onToggle={handleToggle} onDelete={handleDelete} />
+          ))}
+        </ListGroup>
+      )}
     </div>
   )
 }

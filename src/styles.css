@@ -1,76 +1,60 @@
 :root {
-    --bg: #f7f7f9;
-    --card: #fff;
-    --accent: #4f46e5;
+    --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --accent: #667eea;
 }
 
 body {
-    font-family: Inter, system-ui, Arial, sans-serif;
     background: var(--bg);
-    margin: 0;
-    padding: 24px
+    min-height: 100vh;
+}
+
+.app-wrapper {
+    padding: 20px 0 40px 0;
 }
 
 .app-container {
-    max-width: 640px;
-    margin: 0 auto;
-    background: var(--card);
-    padding: 24px;
-    border-radius: 8px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06)
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
 }
 
 .input-row {
     display: flex;
-    gap: 8px;
-    margin-bottom: 12px
+    gap: 12px;
+    align-items: stretch;
 }
 
-input[aria-label="new-todo"] {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px
+.input-row .form-control:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-button {
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer
+.input-row .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
 }
 
-.todo-list {
-    list-style: none;
-    padding: 0;
-    margin: 0
+.list-group-item {
+    border-radius: 8px;
+    transition: all 0.3s ease;
 }
 
-.todo-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid #f0f0f0
+.list-group-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.todo-item .todo-text {
-    margin-left: 8px
+.form-check-input:checked {
+    background-color: var(--accent);
+    border-color: var(--accent);
 }
 
-.todo-item.completed .todo-text {
-    text-decoration: line-through;
-    color: #777
+.btn-danger:hover {
+    transform: scale(1.1);
 }
 
-.error {
-    color: #b91c1c;
-    margin-bottom: 8px
+@media (max-width: 768px) {
+    .input-row {
+        flex-direction: column;
+    }
 }
 
-.empty {
-    color: #666;
-    margin-top: 12px
-}

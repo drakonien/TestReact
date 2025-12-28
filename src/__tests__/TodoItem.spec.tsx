@@ -11,7 +11,7 @@ describe('TodoItem', () => {
     completed: false
   }
 
-  test('renders todo item with text', () => {
+  it('renders todo item with text', () => {
     const mockToggle = vi.fn()
     const mockDelete = vi.fn()
 
@@ -22,7 +22,7 @@ describe('TodoItem', () => {
     expect(screen.getByText('Test item')).toBeInTheDocument()
   })
 
-  test('calls onToggle when checkbox is clicked', async () => {
+  it('calls onToggle when checkbox is clicked', async () => {
     const mockToggle = vi.fn()
     const mockDelete = vi.fn()
 
@@ -37,7 +37,7 @@ describe('TodoItem', () => {
     expect(mockToggle).toHaveBeenCalledWith('1')
   })
 
-  test('calls onDelete when delete button is clicked', async () => {
+  it('calls onDelete when delete button is clicked', async () => {
     const mockToggle = vi.fn()
     const mockDelete = vi.fn()
 
@@ -46,13 +46,13 @@ describe('TodoItem', () => {
     )
 
     const user = userEvent.setup()
-    const deleteBtn = screen.getByText('Delete')
+    const deleteBtn = screen.getByLabelText('delete-1')
     await user.click(deleteBtn)
 
     expect(mockDelete).toHaveBeenCalledWith('1')
   })
 
-  test('shows completed state with strikethrough', () => {
+  it('shows completed state with strikethrough', () => {
     const completedTodo: Todo = { ...mockTodo, completed: true }
     const mockToggle = vi.fn()
     const mockDelete = vi.fn()
@@ -61,7 +61,7 @@ describe('TodoItem', () => {
       <TodoItem todo={completedTodo} onToggle={mockToggle} onDelete={mockDelete} />
     )
 
-    const listItem = container.querySelector('.todo-item.completed')
-    expect(listItem).toBeInTheDocument()
+    const textSpan = screen.getByText('Test item')
+    expect(textSpan).toHaveClass('text-decoration-line-through')
   })
 })

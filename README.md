@@ -38,3 +38,9 @@ Features
 Notes
 
 - To run tests locally, first run `npm install` to install dependencies.
+
+## Verify packages versions
+
+```bash
+npx npm-check-updates
+```

@@ -37,7 +37,7 @@ describe('TodoApp', () => {
     await user.click(checkbox)
     expect(checkbox.checked).toBe(true)
 
-    const deleteBtn = screen.getByText('Delete')
+    const deleteBtn = screen.getByLabelText(/delete-/)
     await user.click(deleteBtn)
     expect(screen.queryByText('Do stuff')).toBeNull()
   })
