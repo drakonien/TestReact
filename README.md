@@ -29,13 +29,13 @@ npm run build
 npm run preview
 ```
 
-Features
+## Features
 
 - Add new items (duplicate prevention)
 - Toggle completed state
 - Delete items
 
-Notes
+## Notes
 
 - To run tests locally, first run `npm install` to install dependencies.
 
