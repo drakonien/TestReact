@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import { Form, Button, ListGroup, Alert } from 'react-bootstrap'
 import { Lightbulb } from 'react-bootstrap-icons'
 import { Todo } from '../types'
@@ -13,27 +13,36 @@ export default function TodoApp() {
   const [text, setText] = useState('')
   const [error, setError] = useState<string | null>(null)
 
-  function handleAdd() {
+  const handleAdd = useCallback(() => {
     const trimmed = text.trim()
     if (!trimmed) return
-    const exists = items.some(i => i.text.toLowerCase() === trimmed.toLowerCase())
-    if (exists) {
-      setError('Duplicate item')
-      return
-    }
-    const newItem: Todo = { id: uid(), text: trimmed, completed: false }
-    setItems(prev => [newItem, ...prev])
-    setText('')
-    setError(null)
-  }
 
-  function handleToggle(id: string) {
+    setItems(prev => {
+      const exists = prev.some(i => i.text.toLowerCase() === trimmed.toLowerCase())
+      if (exists) {
+        setError('Duplicate item')
+        return prev
+      }
+      const newItem: Todo = { id: uid(), text: trimmed, completed: false }
+      setError(null)
+      setText('')
+      return [newItem, ...prev]
+    })
+  }, [text])
+
+  const handleToggle = useCallback((id: string) => {
     setItems(prev => prev.map(i => (i.id === id ? { ...i, completed: !i.completed } : i)))
-  }
+  }, [])
 
-  function handleDelete(id: string) {
+  const handleDelete = useCallback((id: string) => {
     setItems(prev => prev.filter(i => i.id !== id))
-  }
+  }, [])
+  const renderedItems = useMemo(
+    () => items.map(item => (
+      <TodoItem key={item.id} todo={item} onToggle={handleToggle} onDelete={handleDelete} />
+    )),
+    [items, handleToggle, handleDelete]
+  )
 
   return (
     <div>
@@ -55,9 +64,7 @@ export default function TodoApp() {
         </div>
       ) : (
         <ListGroup className="todo-list">
-          {items.map(item => (
-            <TodoItem key={item.id} todo={item} onToggle={handleToggle} onDelete={handleDelete} />
-          ))}
+          {renderedItems}
         </ListGroup>
       )}
     </div>

@@ -3,7 +3,7 @@ import { ListGroup, Form, Button } from 'react-bootstrap'
 import { Trash } from 'react-bootstrap-icons'
 import { Todo } from '../types'
 
-export default function TodoItem({
+function TodoItem({
   todo,
   onToggle,
   onDelete
@@ -38,3 +38,5 @@ export default function TodoItem({
     </ListGroup.Item>
   )
 }
+
+export default React.memo(TodoItem)
